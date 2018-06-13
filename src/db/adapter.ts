@@ -4,4 +4,8 @@ function findModel<T extends Document>(model: Model<T>, query: object) {
   return model.find(query)
 }
 
-export { findModel }
+function save(model: Document) {
+  return model.save()
+}
+
+export { findModel, save }

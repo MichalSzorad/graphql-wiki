@@ -14,4 +14,6 @@ app.use(
   }),
 )
 
-app.listen(PORT, () => console.log('Now browse to localhost:4000/graphql'))
+app.listen(PORT, () =>
+  console.log('Now browse to localhost:' + PORT + '/graphql'),
+)
