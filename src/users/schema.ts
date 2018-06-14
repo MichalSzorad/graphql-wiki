@@ -1,5 +1,23 @@
 import { findUserById, createUser } from './manager'
-import schema from './schema.graphql'
+import { IUser } from './models'
+
+interface AddUserParams {
+  email: string
+  password: string
+  displayName: string
+}
+
+interface IdParam {
+  id: string
+}
+
+export interface MutationRoot {
+  addUser(args: AddUserParams): IUser
+}
+
+export interface QueryRoot {
+  user(args: IdParam): IUser
+}
 
 export const resolver = {
   Mutation: {
@@ -8,10 +26,8 @@ export const resolver = {
     },
   },
   Query: {
-    user(parentValue: any, args: any) {
+    user(parentValue: any, args: any): Promise<IUser | null> {
       return findUserById(args.id)
     },
   },
 }
-
-export const typeDef = schema

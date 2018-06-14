@@ -3,7 +3,7 @@ import bodyParser from 'body-parser'
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 import { makeExecutableSchema } from 'graphql-tools'
 
-import { resolver, typeDef } from './users/schema'
+import { resolver } from './users/schema'
 import { PORT } from './config'
 import { init } from './db'
 import { MONGODB_URI } from './config'
@@ -11,16 +11,9 @@ import { MONGODB_URI } from './config'
 init(MONGODB_URI)
 const app = express()
 
-const mainDef = `
-    schema {
-        query: Query,
-        mutation: Mutation
-    }
-`
-
-const Schema = makeExecutableSchema({
+const Schema = makeExecutableSchema<void>({
   resolvers: [resolver],
-  typeDefs: [mainDef, typeDef],
+  typeDefs: [],
 })
 
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: Schema }))

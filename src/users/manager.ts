@@ -1,4 +1,4 @@
-import { UserModel } from './models'
+import { UserModel, IUser, IDocUser } from './models'
 import { save, findModel, findModelById } from '../db/adapter'
 
 interface IUserParams {
@@ -12,7 +12,7 @@ function createUser(params: IUserParams) {
 }
 
 function findUserById(id: string) {
-  return findModelById(UserModel, id)
+  return findModelById<IDocUser>(UserModel, id)
 }
 
 export { createUser, findUserById }

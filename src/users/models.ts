@@ -1,16 +1,20 @@
 import mongoose, { Document, Model } from 'mongoose'
 
-export interface IUser extends Document {
-  id: string
+export interface IUser {
+  _id: string
+  displayName: string
   email: string
   password: string
-  displayName: string
+}
+
+export interface IDocUser extends IUser, Document {
+  _id: string
 }
 
 const userSchema = new mongoose.Schema({
+  displayName: String,
   email: String,
   password: String,
-  displayName: String,
 })
 
-export const UserModel: Model<IUser> = mongoose.model('User', userSchema)
+export const UserModel: Model<IDocUser> = mongoose.model('User', userSchema)
