@@ -1,12 +1,7 @@
 import mongoose from 'mongoose'
 
 function init(connectionUrl: string): void {
-  mongoose.connect(
-    connectionUrl,
-    {
-      useMongoClient: true,
-    },
-  )
+  mongoose.connect(connectionUrl)
 }
 
 export { init }
