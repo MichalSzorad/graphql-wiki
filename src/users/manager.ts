@@ -1,5 +1,5 @@
 import { UserModel } from './models'
-import { save } from '../db/adapter'
+import { save, findModel, findModelById } from '../db/adapter'
 
 interface IUserParams {
   email: string
@@ -11,4 +11,8 @@ function createUser(params: IUserParams) {
   return save(new UserModel(params))
 }
 
-export { createUser }
+function findUserById(id: string) {
+  return findModelById(UserModel, id)
+}
+
+export { createUser, findUserById }

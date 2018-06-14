@@ -8,4 +8,8 @@ function save(model: Document) {
   return model.save()
 }
 
-export { findModel, save }
+function findModelById<T extends Document>(model: Model<T>, id: string) {
+  return model.findById(id)
+}
+
+export { findModel, findModelById, save }
