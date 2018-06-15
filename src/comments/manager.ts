@@ -1,9 +1,10 @@
 import { CommentModel, IDocComment } from './models'
-import { save, findModelById, list } from '../db/adapter'
+import { save, findModelById, list, findModel } from '../db/adapter'
 
 interface ICommentParams {
   text: string
   ownerId: string
+  postId: string
 }
 
 function createComment(params: ICommentParams) {
@@ -17,4 +18,9 @@ function findCommentById(id: string) {
 function getAllComments() {
   return list(CommentModel)
 }
-export { createComment, findCommentById, getAllComments }
+
+function findCommentsByPost(postId: string) {
+  return findModel(CommentModel, { postId: { $eq: postId } })
+}
+
+export { createComment, findCommentById, getAllComments, findCommentsByPost }

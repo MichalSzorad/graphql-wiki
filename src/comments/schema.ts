@@ -1,10 +1,12 @@
 import { findCommentById, createComment, getAllComments } from './manager'
-import { IComment } from './models'
+import { IComment, IDocComment } from './models'
 import { findUserById } from '../users/manager'
+import { findPostById } from '../posts/manager'
 
 interface AddCommentParams {
   text: string
   ownerId: string
+  postId: string
 }
 
 interface IdParam {
@@ -36,8 +38,11 @@ export const resolver = {
   },
 
   IComment: {
-    owner(comment: any) {
+    owner(comment: IDocComment) {
       return findUserById(comment.ownerId)
+    },
+    post(comment: IDocComment) {
+      return findPostById(comment.postId)
     },
   },
 }
