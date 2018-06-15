@@ -1,4 +1,4 @@
-import { UserModel, IDocUser } from './models'
+import { UserModel } from './models'
 import { save, findModelById, list } from '../db/adapter'
 
 interface IUserParams {
