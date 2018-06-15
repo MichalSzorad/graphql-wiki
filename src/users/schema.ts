@@ -11,23 +11,27 @@ interface IdParam {
   id: string
 }
 
-export interface Mutation {
+export interface UserMutation {
   addUser(args: AddUserParams): IUser
 }
 
-export interface Query {
+export interface UserQuery {
   user(args: IdParam): IUser
 }
 
 export const resolver = {
   Mutation: {
-    addUser(parentValue: any, args: any) {
-      return createUser(args)
+    User: {
+      addUser(parentValue: any, args: any) {
+        return createUser(args)
+      },
     },
   },
   Query: {
-    user(parentValue: any, args: any): Promise<IUser | null> {
-      return findUserById(args.id)
+    User: {
+      user(parentValue: any, args: any): Promise<IUser | null> {
+        return findUserById(args.id)
+      },
     },
   },
 }

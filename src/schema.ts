@@ -1,6 +1,15 @@
-import { Query, Mutation } from './users/schema'
+import { UserMutation, UserQuery } from './users/schema'
+import { PostMutation, PostQuery } from './posts/schema'
 
-// Don't forget to declare your schema and the root types!
+interface Query {
+  User: UserQuery
+  Post: PostQuery
+}
+interface Mutation {
+  User: UserMutation
+  Post: PostMutation
+}
+
 /** @graphql schema */
 export interface Schema {
   query: Query

@@ -1,88 +1,37 @@
-import {
-  GraphQLList,
-  GraphQLNonNull,
-  GraphQLObjectType,
-  GraphQLSchema,
-  GraphQLString,
-} from 'graphql'
+import { findPostById, createPost } from './manager'
+import { IPost } from './models'
 
-import posts from './posts'
-import { resolve } from 'url'
+interface AddPostParams {
+  title: string
+  text: string
+  ownerId: string
+}
 
-let allPosts = [...posts]
+interface IdParam {
+  id: string
+}
 
-const UserType = new GraphQLObjectType({
-  name: 'User',
-  fields: {
-    id: { type: GraphQLString },
-  },
-})
+export interface PostMutation {
+  addPost(args: AddPostParams): IPost
+}
 
-const CommentType = new GraphQLObjectType({
-  name: 'Comment',
-  fields: {
-    id: { type: GraphQLString },
-    text: { type: GraphQLString },
-    owner: { type: UserType },
-  },
-})
-const PostType = new GraphQLObjectType({
-  name: 'Post',
-  fields: {
-    id: { type: GraphQLString },
-    title: { type: GraphQLString },
-    text: { type: GraphQLString },
-    comments: {
-      type: new GraphQLList(CommentType),
-      resolve(parentValue, args) {
-        return []
-      },
-    },
-    owner: {
-      type: UserType,
-      resolve(parentValue, args) {
-        return null
+export interface PostQuery {
+  post(args: IdParam): IPost
+}
+
+export const resolver = {
+  Mutation: {
+    Post: {
+      addPost(parentValue: any, args: any) {
+        return createPost(args)
       },
     },
   },
-})
-
-const RootQuery = new GraphQLObjectType({
-  name: 'RootQueryType',
-  fields: {
-    post: {
-      type: PostType,
-      args: { id: { type: GraphQLString } },
-      resolve(parentValue, args) {
-        const { id } = args
-        return allPosts.find(post => post.id === id)
+  Query: {
+    Post: {
+      post(parentValue: any, args: any) {
+        return findPostById(args.id)
       },
     },
   },
-})
-
-const mutation = new GraphQLObjectType({
-  name: 'mutation',
-  fields: {
-    addPost: {
-      type: PostType,
-      args: {
-        title: { type: new GraphQLNonNull(GraphQLString) },
-        text: { type: new GraphQLNonNull(GraphQLString) },
-      },
-      resolve(parentValue, args) {
-        const { title, text } = args
-        const post = { id: allPosts.length + '', title, text }
-        allPosts.push(post)
-        return post
-      },
-    },
-  },
-})
-
-const schema = new GraphQLSchema({
-  query: RootQuery,
-  mutation,
-})
-
-export default schema
+}
