@@ -1,6 +1,7 @@
 import { findPostById, createPost, getAllPosts } from './manager'
-import { IPost } from './models'
+import { IPost, IDocPost } from './models'
 import { findUserById } from '../users/manager'
+import { findCommentsByPost } from '../comments/manager'
 
 interface AddPostParams {
   title: string
@@ -36,8 +37,11 @@ export const resolver = {
     },
   },
   IPost: {
-    owner(post: any) {
+    owner(post: IDocPost) {
       return findUserById(post.ownerId)
+    },
+    comments(post: IDocPost) {
+      return findCommentsByPost(post._id)
     },
   },
 }
