@@ -11,11 +11,11 @@ interface IdParam {
   id: string
 }
 
-export interface MutationRoot {
+export interface Mutation {
   addUser(args: AddUserParams): IUser
 }
 
-export interface QueryRoot {
+export interface Query {
   user(args: IdParam): IUser
 }
 

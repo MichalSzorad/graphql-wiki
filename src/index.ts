@@ -7,13 +7,20 @@ import { resolver } from './users/schema'
 import { PORT } from './config'
 import { init } from './db'
 import { MONGODB_URI } from './config'
+import fs from 'fs'
+import path from 'path'
+
+// generated file will be located only in the dist folder
+const schema = fs
+  .readFileSync(path.resolve(__dirname, 'schema.graphql'))
+  .toString()
 
 init(MONGODB_URI)
 const app = express()
 
 const Schema = makeExecutableSchema<void>({
   resolvers: [resolver],
-  typeDefs: [],
+  typeDefs: [schema],
 })
 
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: Schema }))
