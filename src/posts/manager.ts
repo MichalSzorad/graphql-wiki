@@ -1,4 +1,4 @@
-import { IDocPost, IPost, PostModel } from './models'
+import { IDocPost, PostModel } from './models'
 import { save, findModel, findModelById } from '../db/adapter'
 
 interface IPostParams {
