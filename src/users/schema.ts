@@ -23,7 +23,6 @@ export interface UserQuery {
 export const resolver = {
   Mutation: {
     addUser(parentValue: any, args: any) {
-      console.log('add user', args)
       return createUser(args)
     },
   },
