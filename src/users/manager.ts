@@ -1,5 +1,5 @@
 import { UserModel, IUser, IDocUser } from './models'
-import { save, findModel, findModelById } from '../db/adapter'
+import { save, findModel, findModelById, list } from '../db/adapter'
 
 interface IUserParams {
   email: string
@@ -15,4 +15,7 @@ function findUserById(id: string) {
   return findModelById<IDocUser>(UserModel, id)
 }
 
-export { createUser, findUserById }
+function getAllUsers() {
+  return list(UserModel)
+}
+export { createUser, findUserById, getAllUsers }

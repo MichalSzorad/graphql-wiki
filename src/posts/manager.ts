@@ -15,4 +15,8 @@ function findPostById(id: string) {
   return findModelById<IDocPost>(PostModel, id)
 }
 
-export { createPost, findPostById }
+function getAllPosts() {
+  return findModel<IDocPost>(PostModel, {})
+}
+
+export { createPost, findPostById, getAllPosts }

@@ -1,4 +1,4 @@
-import { findUserById, createUser } from './manager'
+import { findUserById, createUser, getAllUsers } from './manager'
 import { IUser } from './models'
 
 interface AddUserParams {
@@ -17,21 +17,22 @@ export interface UserMutation {
 
 export interface UserQuery {
   user(args: IdParam): IUser
+  users: IUser[]
 }
 
 export const resolver = {
   Mutation: {
-    User: {
-      addUser(parentValue: any, args: any) {
-        return createUser(args)
-      },
+    addUser(parentValue: any, args: any) {
+      console.log('add user', args)
+      return createUser(args)
     },
   },
   Query: {
-    User: {
-      user(parentValue: any, args: any): Promise<IUser | null> {
-        return findUserById(args.id)
-      },
+    user(parentValue: any, args: any): Promise<IUser | null> {
+      return findUserById(args.id)
+    },
+    users() {
+      return getAllUsers()
     },
   },
 }

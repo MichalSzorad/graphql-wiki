@@ -1,5 +1,6 @@
-import { findPostById, createPost } from './manager'
+import { findPostById, createPost, getAllPosts } from './manager'
 import { IPost } from './models'
+import { findUserById } from '../users/manager'
 
 interface AddPostParams {
   title: string
@@ -17,21 +18,26 @@ export interface PostMutation {
 
 export interface PostQuery {
   post(args: IdParam): IPost
+  posts(): IPost[]
 }
 
 export const resolver = {
   Mutation: {
-    Post: {
-      addPost(parentValue: any, args: any) {
-        return createPost(args)
-      },
+    addPost(parentValue: any, args: any) {
+      return createPost(args)
     },
   },
   Query: {
-    Post: {
-      post(parentValue: any, args: any) {
-        return findPostById(args.id)
-      },
+    post(parentValue: any, args: any) {
+      return findPostById(args.id)
+    },
+    posts() {
+      return getAllPosts()
+    },
+  },
+  IPost: {
+    owner(post: any) {
+      return findUserById(post.ownerId)
     },
   },
 }

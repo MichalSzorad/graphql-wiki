@@ -15,4 +15,8 @@ async function findModelById<T extends Document>(model: Model<T>, id: string) {
   return await model.findById(id)
 }
 
-export { findModel, findModelById, save }
+function list<T extends Document>(model: Model<T>) {
+  return findModel<T>(model, {})
+}
+
+export { findModel, findModelById, save, list }
