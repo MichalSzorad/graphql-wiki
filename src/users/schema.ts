@@ -20,6 +20,25 @@ export interface UserQuery {
   users: IUser[]
 }
 
+// function check<T, K extends keyof T>(obj: T, anotherObj: K) {
+//   return 4
+// }
+
+// type SomeFun<A, B> = (a: A) => B
+
+// type FunctionMap<T> = { [P in keyof T]: (a: any) => any }
+
+// type Abc<T extends FunctionMap<T>> = { [P in keyof T]: T[P] }
+
+// const a: Abc<UserMutation> = {
+//   addUser: a => {
+//     return null
+//   },
+//   test: a => {
+//     return a.id
+//   },
+// }
+
 export const resolver = {
   Mutation: {
     addUser(parentValue: any, args: any) {
