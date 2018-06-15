@@ -2,9 +2,9 @@ import { findUserById, createUser, getAllUsers } from './manager'
 import { IUser } from './models'
 
 interface AddUserParams {
+  displayName: string
   email: string
   password: string
-  displayName: string
 }
 
 interface IdParam {

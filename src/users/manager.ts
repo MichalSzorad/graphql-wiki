@@ -2,9 +2,9 @@ import { UserModel } from './models'
 import { save, findModelById, list } from '../db/adapter'
 
 interface IUserParams {
+  displayName: string
   email: string
   password: string
-  displayName: string
 }
 
 function createUser(params: IUserParams) {

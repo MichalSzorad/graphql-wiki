@@ -4,23 +4,23 @@ import { IComment } from '../comments/models'
 
 export interface IPost {
   _id: string
-  title: string
-  text: string
-  owner: IUser
   comments: IComment[]
+  owner: IUser
+  text: string
+  title: string
 }
 
 export interface IDocPost extends Document {
   _id: string
-  title: string
-  text: string
   ownerId: string
+  text: string
+  title: string
 }
 
 const postSchema = new mongoose.Schema({
-  title: String,
-  text: String,
   ownerId: String,
+  text: String,
+  title: String,
 })
 
 export const PostModel: Model<IDocPost> = mongoose.model('Post', postSchema)

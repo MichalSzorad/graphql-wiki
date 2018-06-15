@@ -4,9 +4,9 @@ import { findUserById } from '../users/manager'
 import { findCommentsByPost } from '../comments/manager'
 
 interface AddPostParams {
-  title: string
-  text: string
   ownerId: string
+  text: string
+  title: string
 }
 
 interface IdParam {
