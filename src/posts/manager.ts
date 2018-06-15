@@ -12,11 +12,11 @@ function createPost(params: IPostParams) {
 }
 
 function findPostById(id: string) {
-  return findModelById<IDocPost>(PostModel, id)
+  return findModelById(PostModel, id)
 }
 
 function getAllPosts() {
-  return findModel<IDocPost>(PostModel, {})
+  return findModel(PostModel, {})
 }
 
 export { createPost, findPostById, getAllPosts }

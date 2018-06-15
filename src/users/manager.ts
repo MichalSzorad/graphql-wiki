@@ -12,7 +12,7 @@ function createUser(params: IUserParams) {
 }
 
 function findUserById(id: string) {
-  return findModelById<IDocUser>(UserModel, id)
+  return findModelById(UserModel, id)
 }
 
 function getAllUsers() {
