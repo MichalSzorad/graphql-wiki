@@ -1,5 +1,5 @@
-import { UserModel, IUser, IDocUser } from './models'
-import { save, findModel, findModelById, list } from '../db/adapter'
+import { UserModel, IDocUser } from './models'
+import { save, findModelById, list } from '../db/adapter'
 
 interface IUserParams {
   email: string
