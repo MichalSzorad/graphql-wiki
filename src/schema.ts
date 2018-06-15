@@ -1,8 +1,10 @@
 import { UserMutation, UserQuery } from './users/schema'
 import { PostMutation, PostQuery } from './posts/schema'
 
-interface Query extends UserQuery, PostQuery {}
-interface Mutation extends UserMutation, PostMutation {}
+import { CommentMutation, CommentQuery } from './comments/schema'
+
+interface Query extends UserQuery, PostQuery, CommentQuery {}
+interface Mutation extends UserMutation, PostMutation, CommentMutation {}
 
 /** @graphql schema */
 export interface Schema {

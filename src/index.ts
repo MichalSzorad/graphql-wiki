@@ -5,6 +5,7 @@ import { makeExecutableSchema } from 'graphql-tools'
 
 import { resolver as userResolver } from './users/schema'
 import { resolver as postResolver } from './posts/schema'
+import { resolver as commentResolver } from './comments/schema'
 import { PORT } from './config'
 import { init } from './db'
 import { MONGODB_URI } from './config'
@@ -20,7 +21,7 @@ init(MONGODB_URI)
 const app = express()
 
 const Schema = makeExecutableSchema({
-  resolvers: [userResolver, postResolver],
+  resolvers: [userResolver, postResolver, commentResolver],
   typeDefs: [schema],
 })
 
