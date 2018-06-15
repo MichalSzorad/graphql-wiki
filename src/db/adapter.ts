@@ -1,4 +1,4 @@
-import { Model, Document } from 'mongoose'
+import { Model, Document, Types } from 'mongoose'
 
 function findModel<T extends Document>(model: Model<T>, query: object) {
   return model.find(query)
@@ -9,6 +9,9 @@ function save<T extends Document>(model: T) {
 }
 
 async function findModelById<T extends Document>(model: Model<T>, id: string) {
+  if (!Types.ObjectId.isValid(id)) {
+    return null
+  }
   return await model.findById(id)
 }
 
