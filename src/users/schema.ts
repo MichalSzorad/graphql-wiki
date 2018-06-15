@@ -30,6 +30,8 @@ export interface UserQuery {
 
 // type Abc<T extends FunctionMap<T>> = { [P in keyof T]: T[P] }
 
+// type Bcd<T> = { [P in keyof T]: (a: any) => any }
+
 // const a: Abc<UserMutation> = {
 //   addUser: a => {
 //     return null
