@@ -1,5 +1,5 @@
 module.exports = {
-  env: { node: true },
+  env: { node: true, jest: true },
   parser: 'typescript-eslint-parser',
   parserOptions: {
     ecmaVersion: 6,

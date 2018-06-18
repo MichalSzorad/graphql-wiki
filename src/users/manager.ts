@@ -1,6 +1,6 @@
-import { UserModel } from './models'
-import { save, findModelById, list } from '../db/adapter'
-import { hashPassword } from './lib'
+import { UserModel, IDocUser } from './models'
+import { save as saveModel, findModelById, list } from '../db/adapter'
+import { hashPassword as hash } from './lib'
 
 interface IUserParams {
   displayName: string
@@ -8,12 +8,20 @@ interface IUserParams {
   password: string
 }
 
-async function createUser(params: IUserParams, { hash = hashPassword } = {}) {
+interface CreateUserOptions {
+  hashPassword?(password: string): Promise<string>
+  save?(obj: IDocUser): Promise<IDocUser>
+}
+
+async function createUser(
+  params: IUserParams,
+  options: CreateUserOptions = {},
+) {
+  const { hashPassword = hash, save = saveModel } = options
   const userParams: IUserParams = {
     ...params,
-    password: await hash(params.password),
+    password: await hashPassword(params.password),
   }
-
   return await save(new UserModel(userParams))
 }
 
