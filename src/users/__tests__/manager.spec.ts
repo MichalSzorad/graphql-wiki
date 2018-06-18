@@ -1,5 +1,5 @@
 import { createUser } from '../manager'
-import { IDocUser, UserModel } from '../models'
+import { UserModel } from '../models'
 
 const validUserParams = {
   displayName: 'test',
