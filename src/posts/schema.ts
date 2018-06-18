@@ -1,4 +1,9 @@
-import { findPostById, createPost, getAllPosts } from './manager'
+import {
+  findPostById,
+  createPost,
+  getAllPosts,
+  subscribePostCreated,
+} from './manager'
 import { IPost, IDocPost } from './models'
 import { findUserById } from '../users/manager'
 import { findCommentsByPost } from '../comments/manager'
@@ -22,6 +27,10 @@ export interface PostQuery {
   posts(): IPost[]
 }
 
+export interface PostSubscription {
+  postAdded(): IPost
+}
+
 export const resolver = {
   Mutation: {
     addPost(parentValue: any, args: any) {
@@ -34,6 +43,11 @@ export const resolver = {
     },
     posts() {
       return getAllPosts()
+    },
+  },
+  Subscription: {
+    postAdded: {
+      subscribe: () => subscribePostCreated(),
     },
   },
   IPost: {
