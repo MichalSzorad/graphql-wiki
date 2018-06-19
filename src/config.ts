@@ -16,3 +16,8 @@ export const WS_PORT: number = env
   .get('WS_PORT')
   .required()
   .asIntPositive()
+
+export const SESSION_SECRET: string = env
+  .get('SESSION_SECRET')
+  .required()
+  .asString()

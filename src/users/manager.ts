@@ -1,6 +1,12 @@
 import { UserModel, IDocUser } from './models'
-import { saveModel, findModelById, list, modelExists } from '../db/adapter'
-import { hashPassword as hash } from './lib'
+import {
+  saveModel,
+  findModelById,
+  list,
+  modelExists,
+  findModel,
+} from '../db/adapter'
+import { hashPassword as hash, compatePasswords } from './lib'
 
 interface IUserParams {
   displayName: string
@@ -11,6 +17,11 @@ interface IUserParams {
 interface CreateUserOptions {
   hashPassword?(password: string): Promise<string>
   save?(obj: IDocUser): Promise<IDocUser>
+}
+
+interface IUserAuthenticateParams {
+  email: string
+  password: string
 }
 
 async function createUser(
@@ -29,6 +40,24 @@ function findUserById(id: string) {
   return findModelById(UserModel, id)
 }
 
+async function authenticate({
+  email,
+  password,
+}: IUserAuthenticateParams): Promise<IDocUser | null> {
+  const user = await findUserByEmail(email)
+  if (!user) {
+    return null
+  }
+  const equal = await compatePasswords(password, user.password)
+
+  return equal ? user : null
+}
+
+async function findUserByEmail(email: string): Promise<IDocUser | null> {
+  const users = await findModel(UserModel, { email })
+  return users[0] || null
+}
+
 function getAllUsers() {
   return list(UserModel)
 }
@@ -36,4 +65,11 @@ function getAllUsers() {
 function userExists(id: string): Promise<boolean> {
   return modelExists(UserModel, id)
 }
-export { createUser, findUserById, getAllUsers, userExists }
+export {
+  createUser,
+  findUserById,
+  getAllUsers,
+  userExists,
+  findUserByEmail,
+  authenticate,
+}

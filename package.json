@@ -39,6 +39,7 @@
     "graphql-tools": "^3.0.2",
     "mongoose": "^5.1.5",
     "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "subscriptions-transport-ws": "^0.9.11"
   },
   "devDependencies": {
@@ -46,9 +47,12 @@
     "@types/dotenv": "^4.0.3",
     "@types/express": "^4.16.0",
     "@types/express-graphql": "^0.6.1",
+    "@types/express-session": "^1.15.10",
     "@types/graphql": "^0.13.1",
     "@types/jest": "^23.1.0",
     "@types/mongoose": "^5.0.16",
+    "@types/passport": "^0.4.5",
+    "@types/passport-local": "^1.0.33",
     "@types/ws": "^5.1.2",
     "awesome-typescript-loader": "^5.0.0",
     "concurrently": "^3.5.1",
