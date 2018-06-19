@@ -15,6 +15,11 @@ interface ICommentParams {
   text: string
 }
 
+interface IUpdateCommentParams {
+  commentId: string
+  text: string
+}
+
 interface ICommentOptions {
   validate?(data: ICommentParams): Promise<void>
 }
@@ -44,10 +49,10 @@ function findCommentsByPost(postId: string) {
   return findModel(CommentModel, { postId: { $eq: postId } })
 }
 
-function updateCommentText(commentId: string, text: string) {
+function updateCommentText({ commentId, text }: IUpdateCommentParams) {
   return updateModelById(CommentModel, commentId, {
-    text,
     textUpdatedAt: new Date(),
+    text,
   })
 }
 

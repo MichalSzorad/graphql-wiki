@@ -4,6 +4,7 @@ import {
   createComment,
   getAllComments,
   subscribeCommentCreated,
+  updateCommentText,
 } from './manager'
 import { IComment, IDocComment } from './models'
 import { findUserById } from '../users/manager'
@@ -13,6 +14,11 @@ interface AddCommentParams {
   text: string
   ownerId: string
   postId: string
+}
+
+interface UpdateCommentParams {
+  text: string
+  commentId: string
 }
 
 interface IdParam {
@@ -25,6 +31,7 @@ interface PostIdParam {
 
 export interface CommentMutation {
   addComment(args: AddCommentParams): IComment
+  updateComment(args: UpdateCommentParams): IComment
 }
 
 export interface CommentQuery {
@@ -39,6 +46,7 @@ export interface CommentSubscription {
 export const resolver = {
   Mutation: {
     addComment: (parentValue: any, args: any) => createComment(args),
+    updateComment: (parentValue: any, args: any) => updateCommentText(args),
   },
   Query: {
     comment: (parentValue: any, args: any) => findCommentById(args.id),

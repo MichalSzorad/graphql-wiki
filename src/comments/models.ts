@@ -26,6 +26,7 @@ const commentSchema = new mongoose.Schema(
     ownerId: String,
     postId: String,
     text: String,
+    textUpdatedAt: { type: Date, required: false },
   },
   {
     timestamps: true,
