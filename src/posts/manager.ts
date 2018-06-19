@@ -1,8 +1,6 @@
 import { PostModel } from './models'
 import { save, findModel, findModelById } from '../db/adapter'
-import { PubSub } from 'graphql-subscriptions'
-
-export const pubsub = new PubSub()
+import { pubsub } from '../events'
 
 interface IPostParams {
   ownerId: string
@@ -11,7 +9,7 @@ interface IPostParams {
 }
 
 function subscribePostCreated() {
-  return pubsub.asyncIterator('post-created')
+  return pubsub.asyncIterator('postAdded')
 }
 
 function createPost(params: IPostParams) {

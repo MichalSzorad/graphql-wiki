@@ -11,3 +11,8 @@ export const MONGODB_URI: string = env
   .get('MONGODB_URI')
   .required()
   .asString()
+
+export const WS_PORT: number = env
+  .get('WS_PORT')
+  .required()
+  .asIntPositive()

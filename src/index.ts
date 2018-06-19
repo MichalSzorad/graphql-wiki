@@ -1,16 +1,22 @@
 import express from 'express'
 import bodyParser from 'body-parser'
+import { createServer } from 'http'
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 import { makeExecutableSchema } from 'graphql-tools'
+import { execute, subscribe } from 'graphql'
+import { SubscriptionServer } from 'subscriptions-transport-ws'
 
 import { resolver as userResolver } from './users/schema'
 import { resolver as postResolver } from './posts/schema'
 import { resolver as commentResolver } from './comments/schema'
-import { PORT } from './config'
+
+import { PORT, WS_PORT } from './config'
 import { init } from './db'
 import { MONGODB_URI } from './config'
 import fs from 'fs'
 import path from 'path'
+
+import './event-listeners'
 
 // generated file will be located only in the dist folder
 const schema = fs
@@ -25,9 +31,37 @@ const Schema = makeExecutableSchema({
   typeDefs: [schema],
 })
 
+// express app
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: Schema }))
-app.get('/graphiql', graphiqlExpress({ endpointURL: '/graphql' })) // if you want GraphiQL enabled
+app.get(
+  '/graphiql',
+  graphiqlExpress({
+    endpointURL: '/graphql',
+    subscriptionsEndpoint: `ws://localhost:${WS_PORT}/graphql`,
+  }),
+)
 
 app.listen(PORT, () =>
   console.log('Now browse to localhost:' + PORT + '/graphiql'),
+)
+
+// Create WebSocket listener server
+const websocketServer = createServer((request, response) => {
+  response.writeHead(404)
+  response.end()
+})
+
+websocketServer.listen(WS_PORT, () =>
+  console.log(`ws server is listening on ${WS_PORT}`),
+)
+SubscriptionServer.create(
+  {
+    execute,
+    subscribe,
+    schema: Schema,
+  },
+  {
+    server: websocketServer,
+    path: '/graphql',
+  },
 )

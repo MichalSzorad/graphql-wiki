@@ -1,11 +1,14 @@
 import { Model, Document, Types } from 'mongoose'
+import events, { emitModelCreated } from '../events'
 
 function findModel<T extends Document>(model: Model<T>, query: object) {
   return model.find(query)
 }
 
-function save<T extends Document>(model: T) {
-  return model.save()
+async function save<T extends Document>(model: T) {
+  const result = await model.save()
+  emitModelCreated(events, model.collection.name, result)
+  return result
 }
 
 async function findModelById<T extends Document>(model: Model<T>, id: string) {
