@@ -1,5 +1,11 @@
 import { CommentModel, IDocComment } from './models'
-import { saveModel, findModelById, list, findModel } from '../db/adapter'
+import {
+  saveModel,
+  findModelById,
+  list,
+  findModel,
+  updateModelById,
+} from '../db/adapter'
 import { pubsub } from '../events'
 import { validateComment } from './libs'
 
@@ -38,10 +44,18 @@ function findCommentsByPost(postId: string) {
   return findModel(CommentModel, { postId: { $eq: postId } })
 }
 
+function updateCommentText(commentId: string, text: string) {
+  return updateModelById(CommentModel, commentId, {
+    text,
+    textUpdatedAt: new Date(),
+  })
+}
+
 export {
   createComment,
   findCommentById,
   findCommentsByPost,
   getAllComments,
   subscribeCommentCreated,
+  updateCommentText,
 }

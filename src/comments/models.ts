@@ -8,6 +8,7 @@ export interface IComment {
   owner: IUser
   post: IPost
   text: string
+  textUpdatedAt?: Date
   updatedAt: Date
 }
 
@@ -16,6 +17,7 @@ export interface IDocComment extends Document {
   ownerId: string
   postId: string
   text: string
+  textUpdatedAt?: Date
   updatedAt: Date
 }
 

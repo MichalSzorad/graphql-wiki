@@ -1,6 +1,8 @@
 import { Model, Document, Types } from 'mongoose'
 import events, { emitModelCreated } from '../events'
 
+type Partial<T> = { [K in keyof T]?: T[K] }
+
 function findModel<T extends Document>(model: Model<T>, query: object) {
   return model.find(query)
 }
@@ -22,6 +24,14 @@ function list<T extends Document>(model: Model<T>) {
   return findModel<T>(model, {})
 }
 
+function updateModelById<T extends Document>(
+  model: Model<T>,
+  id: string,
+  object: Partial<T>,
+) {
+  return model.findByIdAndUpdate(id, object)
+}
+
 async function modelExists<T extends Document>(
   model: Model<T>,
   id: string,
@@ -30,4 +40,11 @@ async function modelExists<T extends Document>(
   return !!result
 }
 
-export { findModel, findModelById, saveModel, list, modelExists }
+export {
+  findModel,
+  findModelById,
+  list,
+  modelExists,
+  saveModel,
+  updateModelById,
+}
