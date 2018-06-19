@@ -1,4 +1,9 @@
-import { findCommentById, createComment, getAllComments } from './manager'
+import {
+  findCommentById,
+  createComment,
+  getAllComments,
+  subscribeCommentCreated,
+} from './manager'
 import { IComment, IDocComment } from './models'
 import { findUserById } from '../users/manager'
 import { findPostById } from '../posts/manager'
@@ -13,6 +18,10 @@ interface IdParam {
   id: string
 }
 
+interface PostIdParam {
+  postId: string
+}
+
 export interface CommentMutation {
   addComment(args: AddCommentParams): IComment
 }
@@ -20,6 +29,10 @@ export interface CommentMutation {
 export interface CommentQuery {
   comment(args: IdParam): IComment
   comments: IComment[]
+}
+
+export interface CommentSubscription {
+  commentAdded(args: PostIdParam): IComment
 }
 
 export const resolver = {
@@ -34,6 +47,12 @@ export const resolver = {
     },
     comments() {
       return getAllComments()
+    },
+  },
+
+  Subscription: {
+    commentAdded: {
+      subscribe: (postId: string) => subscribeCommentCreated(postId),
     },
   },
 

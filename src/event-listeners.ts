@@ -8,14 +8,28 @@ interface ModelInfo {
   data: IPost | IUser | IComment
 }
 
+type Map<T> = { [key: string]: T }
+
+const eventModelCreatedCollectionMap: Map<string> = {
+  posts: 'post-created',
+  comments: 'comment-created',
+}
+
 events.on('model-created', (modelInfo: ModelInfo) => {
-  if (modelInfo.collection === 'posts') {
-    events.emit('post-created', modelInfo.data)
+  const { collection, data } = modelInfo
+  if (collection in eventModelCreatedCollectionMap) {
+    events.emit(eventModelCreatedCollectionMap[collection], data)
   }
 })
 
 events.on('post-created', (post: IPost) => {
   pubsub.publish('postAdded', {
     postAdded: post,
+  })
+})
+
+events.on('comment-created', (comment: IComment) => {
+  pubsub.publish('commentAdded', {
+    commentAdded: comment,
   })
 })

@@ -1,10 +1,15 @@
 import { CommentModel, IDocComment } from './models'
 import { save, findModelById, list, findModel } from '../db/adapter'
+import { pubsub } from '../events'
 
 interface ICommentParams {
   ownerId: string
   postId: string
   text: string
+}
+
+function subscribeCommentCreated(postId: string) {
+  return pubsub.asyncIterator('commentAdded')
 }
 
 function createComment(params: ICommentParams) {
@@ -23,4 +28,10 @@ function findCommentsByPost(postId: string) {
   return findModel(CommentModel, { postId: { $eq: postId } })
 }
 
-export { createComment, findCommentById, getAllComments, findCommentsByPost }
+export {
+  createComment,
+  findCommentById,
+  findCommentsByPost,
+  getAllComments,
+  subscribeCommentCreated,
+}
