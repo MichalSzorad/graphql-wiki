@@ -1,5 +1,10 @@
 import { UserModel, IDocUser } from './models'
-import { save as saveModel, findModelById, list } from '../db/adapter'
+import {
+  save as saveModel,
+  findModelById,
+  list,
+  modelExists,
+} from '../db/adapter'
 import { hashPassword as hash } from './lib'
 
 interface IUserParams {
@@ -32,4 +37,8 @@ function findUserById(id: string) {
 function getAllUsers() {
   return list(UserModel)
 }
-export { createUser, findUserById, getAllUsers }
+
+function userExists(id: string): Promise<boolean> {
+  return modelExists(UserModel, id)
+}
+export { createUser, findUserById, getAllUsers, userExists }

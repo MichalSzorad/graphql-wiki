@@ -22,4 +22,12 @@ function list<T extends Document>(model: Model<T>) {
   return findModel<T>(model, {})
 }
 
-export { findModel, findModelById, save, list }
+async function modelExists<T extends Document>(
+  model: Model<T>,
+  id: string,
+): Promise<boolean> {
+  const result = await findModelById(model, id)
+  return !!result
+}
+
+export { findModel, findModelById, save, list, modelExists }

@@ -4,6 +4,7 @@ import { createServer } from 'http'
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 import { makeExecutableSchema } from 'graphql-tools'
 import { execute, subscribe } from 'graphql'
+import { formatError } from 'apollo-errors'
 import { SubscriptionServer } from 'subscriptions-transport-ws'
 
 import { resolver as userResolver } from './users/schema'
@@ -32,7 +33,11 @@ const Schema = makeExecutableSchema({
 })
 
 // express app
-app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: Schema }))
+app.use(
+  '/graphql',
+  bodyParser.json(),
+  graphqlExpress({ schema: Schema, formatError }),
+)
 app.get(
   '/graphiql',
   graphiqlExpress({

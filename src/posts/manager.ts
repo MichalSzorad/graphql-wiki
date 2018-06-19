@@ -1,5 +1,5 @@
 import { PostModel } from './models'
-import { save, findModel, findModelById } from '../db/adapter'
+import { save, findModel, findModelById, modelExists } from '../db/adapter'
 import { pubsub } from '../events'
 
 interface IPostParams {
@@ -24,4 +24,14 @@ function getAllPosts() {
   return findModel(PostModel, {})
 }
 
-export { createPost, findPostById, getAllPosts, subscribePostCreated }
+function postExists(id: string) {
+  return modelExists(PostModel, id)
+}
+
+export {
+  createPost,
+  findPostById,
+  getAllPosts,
+  postExists,
+  subscribePostCreated,
+}
