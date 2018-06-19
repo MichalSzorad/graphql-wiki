@@ -31,7 +31,6 @@ function setup(
   subscriptionsEndpoint: string,
   subscriptionPath: string,
 ) {
-  // express app
   app.use(
     '/graphql',
     bodyParser.json(),
