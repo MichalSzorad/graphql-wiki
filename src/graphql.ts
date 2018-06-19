@@ -25,7 +25,12 @@ const schema = makeExecutableSchema({
   typeDefs: [schemaString],
 })
 
-function setup(app: Router, server: Server) {
+function setup(
+  app: Router,
+  server: Server,
+  subscriptionsEndpoint: string,
+  subscriptionPath: string,
+) {
   // express app
   app.use(
     '/graphql',
@@ -40,7 +45,7 @@ function setup(app: Router, server: Server) {
     '/graphiql',
     graphiqlExpress({
       endpointURL: '/graphql',
-      subscriptionsEndpoint: 'ws://localhost:4000/subscription',
+      subscriptionsEndpoint: subscriptionsEndpoint + subscriptionPath,
     }),
   )
 
@@ -52,7 +57,7 @@ function setup(app: Router, server: Server) {
     },
     {
       server,
-      path: '/subscription',
+      path: subscriptionPath,
     },
   )
 }
