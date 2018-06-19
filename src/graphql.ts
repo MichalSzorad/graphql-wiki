@@ -1,5 +1,5 @@
 import { makeExecutableSchema } from 'graphql-tools'
-import express, { Router } from 'express'
+import { Router } from 'express'
 import { execute, subscribe } from 'graphql'
 import fs from 'fs'
 import path from 'path'
