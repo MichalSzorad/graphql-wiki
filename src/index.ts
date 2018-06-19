@@ -9,10 +9,9 @@ import { init } from './db'
 import { MONGODB_URI, SESSION_SECRET } from './config'
 import setupGraphQLServer from './graphql'
 import './event-listeners'
-
 import { findUserById } from './users/manager'
-
 import setupPassport from './passport/setup'
+
 // setup passport
 setupPassport(passport, {
   findUser: findUserById,
