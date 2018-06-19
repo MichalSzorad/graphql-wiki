@@ -1,10 +1,5 @@
 import { UserModel, IDocUser } from './models'
-import {
-  save as saveModel,
-  findModelById,
-  list,
-  modelExists,
-} from '../db/adapter'
+import { saveModel, findModelById, list, modelExists } from '../db/adapter'
 import { hashPassword as hash } from './lib'
 
 interface IUserParams {

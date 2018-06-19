@@ -1,5 +1,5 @@
 import { PostModel } from './models'
-import { save, findModel, findModelById, modelExists } from '../db/adapter'
+import { saveModel, findModel, findModelById, modelExists } from '../db/adapter'
 import { pubsub } from '../events'
 
 interface IPostParams {
@@ -13,7 +13,7 @@ function subscribePostCreated() {
 }
 
 function createPost(params: IPostParams) {
-  return save(new PostModel(params))
+  return saveModel(new PostModel(params))
 }
 
 function findPostById(id: string) {

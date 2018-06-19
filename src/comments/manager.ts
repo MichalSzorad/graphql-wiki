@@ -1,5 +1,5 @@
 import { CommentModel, IDocComment } from './models'
-import { save, findModelById, list, findModel } from '../db/adapter'
+import { saveModel, findModelById, list, findModel } from '../db/adapter'
 import { pubsub } from '../events'
 import { validateComment } from './libs'
 
@@ -23,7 +23,7 @@ async function createComment(
 ) {
   const { validate = validateComment } = options
   await validate(params)
-  return save(new CommentModel(params))
+  return saveModel(new CommentModel(params))
 }
 
 function findCommentById(id: string) {

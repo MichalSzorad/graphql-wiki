@@ -5,7 +5,7 @@ function findModel<T extends Document>(model: Model<T>, query: object) {
   return model.find(query)
 }
 
-async function save<T extends Document>(model: T) {
+async function saveModel<T extends Document>(model: T) {
   const result = await model.save()
   emitModelCreated(events, model.collection.name, result)
   return result
@@ -30,4 +30,4 @@ async function modelExists<T extends Document>(
   return !!result
 }
 
-export { findModel, findModelById, save, list, modelExists }
+export { findModel, findModelById, saveModel, list, modelExists }
