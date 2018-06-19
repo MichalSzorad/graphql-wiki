@@ -18,6 +18,7 @@ import fs from 'fs'
 import path from 'path'
 
 import './event-listeners'
+import { generateContext } from './gql-context'
 
 // generated file will be located only in the dist folder
 const schema = fs
@@ -36,7 +37,11 @@ const Schema = makeExecutableSchema({
 app.use(
   '/graphql',
   bodyParser.json(),
-  graphqlExpress({ schema: Schema, formatError }),
+  graphqlExpress(req => ({
+    schema: Schema,
+    formatError,
+    context: generateContext(req),
+  })),
 )
 app.get(
   '/graphiql',
