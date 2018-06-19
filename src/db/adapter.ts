@@ -29,7 +29,7 @@ function updateModelById<T extends Document>(
   id: string,
   object: Partial<T>,
 ) {
-  return model.findByIdAndUpdate(id, object)
+  return model.findByIdAndUpdate(id, object, { new: true })
 }
 
 async function modelExists<T extends Document>(
