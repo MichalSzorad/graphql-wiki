@@ -1,3 +1,4 @@
+import { withFilter } from 'graphql-subscriptions'
 import {
   findCommentById,
   createComment,
@@ -37,31 +38,26 @@ export interface CommentSubscription {
 
 export const resolver = {
   Mutation: {
-    addComment(parentValue: any, args: any) {
-      return createComment(args)
-    },
+    addComment: (parentValue: any, args: any) => createComment(args),
   },
   Query: {
-    comment(parentValue: any, args: any) {
-      return findCommentById(args.id)
-    },
-    comments() {
-      return getAllComments()
-    },
+    comment: (parentValue: any, args: any) => findCommentById(args.id),
+    comments: () => getAllComments(),
   },
 
   Subscription: {
     commentAdded: {
-      subscribe: (postId: string) => subscribeCommentCreated(postId),
+      subscribe: withFilter(
+        () => subscribeCommentCreated(),
+        (payload, vars) => {
+          return payload.commentAdded.postId === vars.postId
+        },
+      ),
     },
   },
 
   IComment: {
-    owner(comment: IDocComment) {
-      return findUserById(comment.ownerId)
-    },
-    post(comment: IDocComment) {
-      return findPostById(comment.postId)
-    },
+    owner: (comment: IDocComment) => findUserById(comment.ownerId),
+    post: (comment: IDocComment) => findPostById(comment.postId),
   },
 }

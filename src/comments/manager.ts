@@ -8,7 +8,7 @@ interface ICommentParams {
   text: string
 }
 
-function subscribeCommentCreated(postId: string) {
+function subscribeCommentCreated() {
   return pubsub.asyncIterator('commentAdded')
 }
 
