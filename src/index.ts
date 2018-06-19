@@ -2,6 +2,7 @@ import express from 'express'
 import { createServer } from 'http'
 import session from 'express-session'
 import passport from 'passport'
+import bodyParser from 'body-parser'
 
 import { PORT, WS_PORT } from './config'
 import { init } from './db'
@@ -36,6 +37,15 @@ app.use(
 
 app.use(passport.initialize())
 app.use(passport.session())
+
+app.post(
+  '/auth/login',
+  bodyParser.urlencoded({ extended: true }),
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+  }),
+)
 
 setupGraphQLServer(app, wsServer, `ws://localhost:${WS_PORT}`, '/subscriptions')
 
