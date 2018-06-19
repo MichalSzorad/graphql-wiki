@@ -43,16 +43,10 @@ export interface UserQuery {
 
 export const resolver = {
   Mutation: {
-    addUser(parentValue: any, args: any) {
-      return createUser(args)
-    },
+    addUser: (parentValue: any, args: any) => createUser(args),
   },
   Query: {
-    user(parentValue: any, args: any): Promise<IUser | null> {
-      return findUserById(args.id)
-    },
-    users() {
-      return getAllUsers()
-    },
+    user: (parentValue: any, args: any) => findUserById(args.id),
+    users: () => getAllUsers(),
   },
 }

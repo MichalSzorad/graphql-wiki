@@ -49,9 +49,7 @@ export const resolver = {
     commentAdded: {
       subscribe: withFilter(
         () => subscribeCommentCreated(),
-        (payload, vars) => {
-          return payload.commentAdded.postId === vars.postId
-        },
+        (payload, vars) => payload.commentAdded.postId === vars.postId,
       ),
     },
   },

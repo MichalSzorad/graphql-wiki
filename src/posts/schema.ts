@@ -33,17 +33,11 @@ export interface PostSubscription {
 
 export const resolver = {
   Mutation: {
-    addPost(parentValue: any, args: any) {
-      return createPost(args)
-    },
+    addPost: (parentValue: any, args: any) => createPost(args),
   },
   Query: {
-    post(parentValue: any, args: any) {
-      return findPostById(args.id)
-    },
-    posts() {
-      return getAllPosts()
-    },
+    post: (parentValue: any, args: any) => findPostById(args.id),
+    posts: () => getAllPosts(),
   },
   Subscription: {
     postAdded: {
@@ -51,11 +45,7 @@ export const resolver = {
     },
   },
   IPost: {
-    owner(post: IDocPost) {
-      return findUserById(post.ownerId)
-    },
-    comments(post: IDocPost) {
-      return findCommentsByPost(post._id)
-    },
+    owner: (post: IDocPost) => findUserById(post.ownerId),
+    comments: (post: IDocPost) => findCommentsByPost(post._id),
   },
 }
