@@ -1,6 +1,7 @@
 import { PostModel } from './models'
 import { saveModel, findModel, findModelById, modelExists } from '../db/adapter'
 import { pubsub } from '../events'
+import { validatePost } from './lib'
 
 interface IPostParams {
   ownerId: string
@@ -8,11 +9,20 @@ interface IPostParams {
   title: string
 }
 
+interface CreatePostOptions {
+  validate?(params: IPostParams): Promise<void>
+}
+
 function subscribePostCreated() {
   return pubsub.asyncIterator('postAdded')
 }
 
-function createPost(params: IPostParams) {
+async function createPost(
+  params: IPostParams,
+  options: CreatePostOptions = {},
+) {
+  const { validate = validatePost } = options
+  await validate(params)
   return saveModel(new PostModel(params))
 }
 
