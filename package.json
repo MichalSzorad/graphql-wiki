@@ -8,7 +8,7 @@
     "tsc": "tsc -w",
     "dev:server": "nodemon dist",
     "watch": "nodemon --exec \"npm run build:schema && node ./dist/index.js\"",
-    "build:schema": "ts2gql src/schema.ts > dist/schema.graphql",
+    "build:schema": "echo Generating schema ... && ts2gql src/schema.ts > dist/schema.graphql && echo Schema generated",
     "dev": "concurrently \"npm run tsc\" \"npm run watch\"",
     "test:lint": "eslint src --ext .ts",
     "format": "eslint src --fix --ext .ts"
