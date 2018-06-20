@@ -16,7 +16,7 @@ export interface IDocUser extends IUser, Document {
 const userSchema = new mongoose.Schema(
   {
     displayName: String,
-    email: String,
+    email: { type: String, unique: true },
     password: String,
   },
   {
