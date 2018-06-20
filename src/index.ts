@@ -8,6 +8,7 @@ import { PORT, WS_PORT } from './config'
 import { init } from './db'
 import { MONGODB_URI, SESSION_SECRET } from './config'
 import setupGraphQLServer from './graphql'
+import cookieParser from 'cookie-parser'
 import './event-listeners'
 import { findUserById } from './users/manager'
 import setupPassport from './passport/setup'
@@ -34,17 +35,16 @@ app.use(
   }),
 )
 
+app.use(cookieParser())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.post(
-  '/auth/login',
-  bodyParser.urlencoded({ extended: true }),
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-  }),
-)
+app.post('/auth/login', passport.authenticate('local'), (req, res) => {
+  res.json({ authenticated: true })
+})
 
 setupGraphQLServer(app, wsServer, `ws://localhost:${WS_PORT}`, '/subscriptions')
 

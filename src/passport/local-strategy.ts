@@ -1,7 +1,7 @@
-import { Strategy } from 'passport-local'
+import { Strategy as LocalStrategy } from 'passport-local'
 import { authenticate } from '../users/manager'
 
-const localStrategy = new Strategy((username, password, done) => {
+const localStrategy = new LocalStrategy((username, password, done) => {
   authenticate({ email: username, password })
     .then(user => {
       if (!user) {
