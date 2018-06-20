@@ -34,7 +34,7 @@ function setup(
   app.use(
     '/graphql',
     bodyParser.json(),
-    graphqlExpress(req => ({
+    graphqlExpress((req: any) => ({
       schema,
       formatError,
       context: generateContext(req),
