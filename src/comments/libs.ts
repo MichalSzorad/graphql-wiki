@@ -2,10 +2,12 @@ import { userExists } from '../users/manager'
 import { postExists } from '../posts/manager'
 
 import { FieldRequiredError } from './errors'
+import { findCommentById } from './manager'
 
 interface ICommentParams {
   ownerId: string
   postId: string
+  parentId?: string
 }
 
 interface ICommentOptions {
@@ -17,7 +19,7 @@ export async function validateComment(
   params: ICommentParams,
   options: ICommentOptions = {},
 ): Promise<void> {
-  const { ownerId, postId } = params
+  const { ownerId, postId, parentId } = params
   const {
     checkPostExistence = postExists,
     checkUserExistence = userExists,
@@ -37,5 +39,17 @@ export async function validateComment(
         details: 'Post needs to exist',
       },
     })
+  }
+
+  if (typeof parentId === 'string') {
+    const comment = await findCommentById(parentId)
+    if (!comment || comment.postId !== postId) {
+      throw new FieldRequiredError({
+        data: {
+          details:
+            'Parent comment must exist and must have the same postId. Do not pass parentId if you want.',
+        },
+      })
+    }
   }
 }
