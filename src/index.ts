@@ -31,6 +31,8 @@ const wsServer = createServer((request, response) => {
 // apply middleware
 app.use(
   session({
+    resave: false,
+    saveUninitialized: false,
     secret: SESSION_SECRET,
   }),
 )
