@@ -14,6 +14,7 @@ interface AddCommentParams {
   text: string
   ownerId: string
   postId: string
+  parentId: string
 }
 
 interface UpdateCommentParams {
@@ -65,5 +66,7 @@ export const resolver = {
   IComment: {
     owner: (comment: IDocComment) => findUserById(comment.ownerId),
     post: (comment: IDocComment) => findPostById(comment.postId),
+    parent: (comment: IDocComment) =>
+      comment.parentId ? findCommentById(comment.parentId) : null,
   },
 }

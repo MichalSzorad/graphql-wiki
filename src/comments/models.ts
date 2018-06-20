@@ -5,6 +5,7 @@ import { IPost } from '../posts/models'
 export interface IComment {
   _id: string
   createdAt: Date
+  parent?: IComment
   owner: IUser
   post: IPost
   text: string
@@ -14,6 +15,7 @@ export interface IComment {
 
 export interface IDocComment extends Document {
   createdAt: Date
+  parentId?: string
   ownerId: string
   postId: string
   text: string
@@ -26,6 +28,7 @@ const commentSchema = new mongoose.Schema(
     ownerId: String,
     postId: String,
     text: String,
+    parentId: { type: String, required: false, default: null },
     textUpdatedAt: { type: Date, required: false },
   },
   {

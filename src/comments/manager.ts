@@ -13,6 +13,7 @@ interface ICommentParams {
   ownerId: string
   postId: string
   text: string
+  parentId?: string
 }
 
 interface IUpdateCommentParams {
