@@ -23,6 +23,9 @@ const schemaString = readSchemaFile('schema.graphql')
 const schema = makeExecutableSchema({
   resolvers: [userResolver, postResolver, commentResolver],
   typeDefs: [schemaString],
+  resolverValidationOptions: {
+    requireResolversForResolveType: false,
+  },
 })
 
 function setup(
