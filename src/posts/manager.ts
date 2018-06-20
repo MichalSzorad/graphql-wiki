@@ -7,6 +7,7 @@ interface IPostParams {
   ownerId: string
   text: string
   title: string
+  keywords: string[]
 }
 
 interface CreatePostOptions {
@@ -38,10 +39,17 @@ function postExists(id: string) {
   return modelExists(PostModel, id)
 }
 
+function findPostsByKeywords(keywords: string[]) {
+  return findModel(PostModel, {
+    keywords: { $all: keywords },
+  })
+}
+
 export {
   createPost,
   findPostById,
   getAllPosts,
   postExists,
   subscribePostCreated,
+  findPostsByKeywords,
 }

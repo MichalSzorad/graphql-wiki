@@ -3,6 +3,7 @@ import {
   createPost,
   getAllPosts,
   subscribePostCreated,
+  findPostsByKeywords,
 } from './manager'
 import { IPost, IDocPost } from './models'
 import { findUserById } from '../users/manager'
@@ -12,10 +13,15 @@ interface AddPostParams {
   ownerId: string
   text: string
   title: string
+  keywords: string[]
 }
 
 interface IdParam {
   id: string
+}
+
+interface IFindByKeyword {
+  keyword: string
 }
 
 export interface PostMutation {
@@ -25,6 +31,7 @@ export interface PostMutation {
 export interface PostQuery {
   post(args: IdParam): IPost
   posts(): IPost[]
+  findPostsByKeyword(args: IFindByKeyword): IPost[]
 }
 
 export interface PostSubscription {
@@ -38,6 +45,8 @@ export const resolver = {
   Query: {
     post: (parentValue: any, args: any) => findPostById(args.id),
     posts: () => getAllPosts(),
+    findPostsByKeyword: (parentValue: any, args: any) =>
+      findPostsByKeywords([args.keyword]),
   },
   Subscription: {
     postAdded: {

@@ -3,7 +3,9 @@ import events, { emitModelCreated } from '../events'
 
 type Partial<T> = { [K in keyof T]?: T[K] }
 
-function findModel<T extends Document>(model: Model<T>, query: Partial<T>) {
+type Query<T> = { [K in keyof T]?: T[K] | any }
+
+function findModel<T extends Document>(model: Model<T>, query: Query<T>) {
   return model.find(query)
 }
 

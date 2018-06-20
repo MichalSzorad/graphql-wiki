@@ -6,6 +6,7 @@ export interface IPost {
   _id: string
   comments: IComment[]
   createdAt: Date
+  keywords: string[]
   owner: IUser
   text: string
   title: string
@@ -15,6 +16,7 @@ export interface IPost {
 export interface IDocPost extends Document {
   _id: string
   createdAt: Date
+  keywords: string[]
   ownerId: string
   text: string
   title: string
@@ -23,6 +25,7 @@ export interface IDocPost extends Document {
 
 const postSchema = new mongoose.Schema(
   {
+    keywords: [String],
     ownerId: String,
     text: String,
     title: String,
